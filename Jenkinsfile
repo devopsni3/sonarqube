@@ -3,13 +3,13 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=devopsni3'
+        sh 'mvn clean package'
       }
     }
     stage('SonarQube analysis') {
       steps {
-        withSonarQubeEnv('SonarCloud') {
-          sh 'mvn sonar:sonar'
+        withSonarQubeEnv('sonar') {
+          sh 'mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=devopsni3'
         }
       }
     }
